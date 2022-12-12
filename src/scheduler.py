@@ -42,14 +42,10 @@ class Scheduler:
         schedule = []
 
         for d in range(DAYS):
-            print(f"===DAY {d}===")
             schedule.append([])
             roster = self.rosters[d]
-            print(f"Roster: {roster}")    
-
 
             for building in self.buildings:
-                print(f"--Building: {building}--")
                 if not chain.from_iterable([emps for emps in roster.values()]):
                     # Bit complicated but checks if anyone is left on the roster
                     break
@@ -59,7 +55,6 @@ class Scheduler:
                 staffing = get_staffing_for_requirements(
                     roster, building.get_requirements()
                 )
-                print(f"staffing: {staffing}")
                 if not staffing:
                     # Could not staff this building
                     # Continue to attempt other buildings
@@ -71,8 +66,6 @@ class Scheduler:
                     for i in range(staffing[e_type]):
                         staffed_employees.append(employees.pop())
                 schedule[d].append((building, staffed_employees))
-                print(f"staffed_employees: {staffed_employees}")
-                print(schedule[d])
 
                 # Mark this building as finished
                 building.mark_finished()
